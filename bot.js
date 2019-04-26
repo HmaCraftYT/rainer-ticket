@@ -1,6 +1,13 @@
-client.on("message", (message) => {
+const Discord = require('discord.js');
+const client = new Discord.Client();
+var prefix ="!"
+client.on('ready', () => {
+  console.log(`Logged in as ${client.user.tag}!`);
+});
  
-   if (message.content.startsWith("+new")) {  
+ client.on("message", (message) => {
+ 
+   if (message.content.startsWith("$new")) {  
         const reason = message.content.split(" ").slice(1).join(" ");  
         if (!message.guild.roles.exists("name", "Support Team")) return message.channel.send(`لازم تسوي رتبة اسمها \`Support Team\` وتنطي البوت ادمنيتر حتا يقدر يسوي الرومات ويعدل برمشنات`);
         if (message.guild.channels.exists("name", "ticket-{message.author.id}" + message.author.id)) return message.channel.send(`You already have a ticket open.`);    /// ALPHA CODES
@@ -31,12 +38,12 @@ client.on("message", (message) => {
     }
  
  
-  if (message.content.startsWith("+close")) {
+  if (message.content.startsWith("$close")) {
         if (!message.channel.name.startsWith(`ticket-`)) return message.channel.send(`You can't use the close command outside of a ticket channel.`);
  
-       message.channel.send(`هل انت متأكد من اقفالك للتذكرة اذا متأكد اكتب.+close`)
+       message.channel.send(`هل انت متأكد من اقفالك للتذكرة اذا متأكد اكتب.$close`)
            .then((m) => {
-               message.channel.awaitMessages(response => response.content === '+close', {
+               message.channel.awaitMessages(response => response.content === '$close', {
                        max: 1,
                        time: 10000,
                        errors: ['time'],
@@ -53,3 +60,10 @@ client.on("message", (message) => {
    }
  
 });
+ 
+ 
+ 
+ 
+ 
+client.login(process.env.BOT_TOKEN);
+
